@@ -1,0 +1,38 @@
+#usda 1.0
+(
+    upAxis = "Y"
+)
+
+def Xform "Robot"
+{
+    def Xform "Base" (
+        prepend references = @Base.usda@
+    )
+    {
+    }
+
+    def Xform "LowerArm" (
+        prepend references = @LowerArm.usda@
+    )
+    {
+        double3 xformOp:translate = (0, 2, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Xform "UpperArm" (
+        prepend references = @UpperArm.usda@
+    )
+    {
+        double3 xformOp:translate = (0, 4, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Xform "Gripper" (
+        prepend references = @Gripper.usda@
+    )
+    {
+        double3 xformOp:translate = (0, 6, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}
+
