@@ -1,10 +1,13 @@
-from pxr import Usd, UsdGeom, Gf
+from pxr import Usd, UsdGeom
 
-stage = Usd.Stage.CreateNew("UpperArm.usda")
+file_path = "C:/Users/matte/OneDrive - Lebanese American University/Desktop/RobotArmUsd/UpperArm.usda"
+stage = Usd.Stage.CreateNew(file_path)
+
 UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
+xform = UsdGeom.Xform.Define(stage, "/UpperArm")
+cube = UsdGeom.Cube.Define(stage, "/UpperArm/Geom")
+cube.CreateSizeAttr(1.2)  # Same size as LowerArm
 
-cube = UsdGeom.Cube.Define(stage, '/UpperArm')
-cube.AddTransformOp().Set(Gf.Matrix4d().SetScale(Gf.Vec3d(1, 4, 1)))  # Same height
-
+stage.SetDefaultPrim(xform.GetPrim())
 stage.GetRootLayer().Save()
-print("✅ upper_arm.usda created.")
+print("✅ UpperArm.usda created.")

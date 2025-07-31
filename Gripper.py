@@ -1,10 +1,13 @@
 from pxr import Usd, UsdGeom
 
-stage = Usd.Stage.CreateNew("Gripper.usda")
+file_path = "C:/Users/matte/OneDrive - Lebanese American University/Desktop/RobotArmUsd/Gripper.usda"
+stage = Usd.Stage.CreateNew(file_path)
+
 UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
+xform = UsdGeom.Xform.Define(stage, "/Gripper")
+sphere = UsdGeom.Sphere.Define(stage, "/Gripper/Geom")
+sphere.CreateRadiusAttr(0.5)  # Small and centered
 
-sphere = UsdGeom.Sphere.Define(stage, '/Gripper')
-sphere.CreateRadiusAttr(0.5)
-
+stage.SetDefaultPrim(xform.GetPrim())
 stage.GetRootLayer().Save()
 print("✅ Gripper.usda created.")

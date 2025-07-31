@@ -1,10 +1,13 @@
-from pxr import Usd, UsdGeom, Gf
+from pxr import Usd, UsdGeom
 
-stage = Usd.Stage.CreateNew("LowerArm.usda")
+file_path = "C:/Users/matte/OneDrive - Lebanese American University/Desktop/RobotArmUsd/LowerArm.usda"
+stage = Usd.Stage.CreateNew(file_path)
+
 UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
+xform = UsdGeom.Xform.Define(stage, "/LowerArm")
+cube = UsdGeom.Cube.Define(stage, "/LowerArm/Geom")
+cube.CreateSizeAttr(1.2)  # Tall rectangular prism
 
-cube = UsdGeom.Cube.Define(stage, '/LowerArm')
-cube.AddTransformOp().Set(Gf.Matrix4d().SetScale(Gf.Vec3d(1, 4, 1)))  # Tall
-
+stage.SetDefaultPrim(xform.GetPrim())
 stage.GetRootLayer().Save()
-print("✅ lower_arm.usda created.")
+print("✅ LowerArm.usda created.")
