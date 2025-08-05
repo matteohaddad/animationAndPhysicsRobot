@@ -1,0 +1,425 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (0, 0, 50000)
+                double radius = 500
+            }
+            dictionary Perspective = {
+                double3 position = (36.32105503717186, 29.66111034709796, 4.821189802724993)
+                double3 target = (-26.526804482872926, -3.182361705096028, 3.2143341954929783)
+            }
+            dictionary Right = {
+                double3 position = (-50000, 0, 0)
+                double radius = 500
+            }
+            dictionary Top = {
+                double3 position = (0, 50000, 0)
+                double radius = 500
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary navmeshSettings = {
+            double agentHeight = 180
+            double agentRadius = 20
+            bool excludeRigidBodies = 1
+            int ver = 1
+            double voxelCeiling = 460
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./physicsTest.usda"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+            float3 "rtx:debugView:pixelDebug:textColor" = (0, 1e18, 0)
+            float3 "rtx:fog:fogColor" = (0.75, 0.75, 0.75)
+            float3 "rtx:index:regionOfInterestMax" = (0, 0, 0)
+            float3 "rtx:index:regionOfInterestMin" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_position" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_reflectivity" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_rotation_axis" = (3.4028235e38, 3.4028235e38, 3.4028235e38)
+            float3 "rtx:post:backgroundZeroAlpha:backgroundDefaultColor" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gain" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:offset" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:saturation" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:blackpoint" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gain" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:lift" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:multiply" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:offset" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:whitepoint" = (1, 1, 1)
+            float3 "rtx:post:lensDistortion:lensFocalLengthArray" = (10, 30, 50)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffX" = (450, 475, 500)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffY" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:cutoffPoint" = (2, 2, 2)
+            double "rtx:post:lensFlares:flareScale" = 0.075
+            float3 "rtx:post:lensFlares:haloFlareFalloff" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:haloFlareRadius" = (75, 75, 75)
+            float3 "rtx:post:lensFlares:isotropicFlareFalloff" = (50, 50, 50)
+            float3 "rtx:post:tonemap:whitepoint" = (1, 1, 1)
+            float3 "rtx:raytracing:inscattering:singleScatteringAlbedo" = (0.9, 0.9, 0.9)
+            float3 "rtx:raytracing:inscattering:transmittanceColor" = (0.5, 0.5, 0.5)
+            float3 "rtx:sceneDb:ambientLightColor" = (0, 0, 0)
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 100
+    metersPerUnit = 0.01
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Y"
+)
+
+reorder rootPrims = ["Environment", "World", "OmniverseKit_Persp", "OmniverseKit_Front", "OmniverseKit_Top", "OmniverseKit_Right", "Render"]
+
+def Xform "World"
+{
+    reorder nameChildren = ["PhysicsScene", "RobotA", "Environment"]
+    def Xform "RobotA" (
+        prepend apiSchemas = ["MaterialBindingAPI", "PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+        references = @./Robot.usda@
+    )
+    {
+        rel material:binding = </World/PhysicsMaterial> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        bool physics:kinematicEnabled = 0
+        bool physics:rigidBodyEnabled = 1
+        double3 xformOp:rotateXYZ = (0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 7.468554653207001, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        over "Base" (
+            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+        )
+        {
+            float xformOp:rotateX = 0
+            float xformOp:rotateY = 19.22513
+            float xformOp:rotateZ = 0
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0.6918745055707998, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZ", "xformOp:rotateX", "xformOp:rotateY", "xformOp:scale"]
+
+            over "Geom" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                float3 xformOp:rotateXYZ = (3333, 2, 0)
+                float3 xformOp:scale = (1.3, 1.3, 1.2)
+                double3 xformOp:translate = (0.030287692532000185, -3.8173299506656564, 7.399116042083875e-14)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        over "LowerArm" (
+            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+        )
+        {
+            over "Geom" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                float3 xformOp:rotateXYZ = (0, -0, 0)
+                float3 xformOp:scale = (1, 6, 1)
+                double3 xformOp:translate = (0.29669676042458093, -0.6222635366423468, -0.12922978169090982)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        over "UpperArm" (
+            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+        )
+        {
+            over "Geom" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                float3 xformOp:rotateXYZ = (22, 0, 0)
+                float3 xformOp:scale = (1, 4.980425, 1.1638763)
+                double3 xformOp:translate = (0.6454637302782074, 2.978913163420504, 0.9757239199823606)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        over "Gripper" (
+            delete apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+        )
+        {
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            float3 xformOp:scale = (1.2505263, 1.2505263, 1.2505263)
+            double3 xformOp:translate = (0, 3.6422121115083232, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+            over "Geom" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+            )
+            {
+                bool physics:collisionEnabled = 1
+                float3 xformOp:rotateXYZ = (0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0.4035849863701956, 5.118613446950283, 1.5838852444607887)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+    }
+
+    def Xform "Environment"
+    {
+        int ground:size = 1400
+        string ground:type = "On"
+        double3 xformOp:rotateXYZ = (0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def DomeLight "Sky" (
+            prepend apiSchemas = ["ShapingAPI"]
+        )
+        {
+            float inputs:colorTemperature = 6250
+            bool inputs:enableColorTemperature = 1
+            float inputs:exposure = 9
+            float inputs:intensity = 1
+            float inputs:shaping:cone:angle = 180
+            float inputs:shaping:cone:softness
+            float inputs:shaping:focus
+            color3f inputs:shaping:focusTint
+            asset inputs:shaping:ies:file
+            asset inputs:texture:file = @https://omniverse-content-production.s3.us-west-2.amazonaws.com/Assets/Scenes/Templates/Default/SubUSDs/textures/CarLight_512x256.hdr@
+            token inputs:texture:format = "latlong"
+            token visibility = "inherited"
+            double3 xformOp:rotateXYZ = (0, -90, -90)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 305, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def DistantLight "DistantLight" (
+            prepend apiSchemas = ["ShapingAPI"]
+        )
+        {
+            float inputs:angle = 2.5
+            float inputs:colorTemperature = 7250
+            bool inputs:enableColorTemperature = 1
+            float inputs:exposure = 10
+            float inputs:intensity = 1
+            float inputs:shaping:cone:angle = 180
+            float inputs:shaping:cone:softness
+            float inputs:shaping:focus
+            color3f inputs:shaping:focusTint
+            asset inputs:shaping:ies:file
+            token visibility = "inherited"
+            double3 xformOp:rotateXYZ = (-105, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 305, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Scope "Looks"
+        {
+            def Material "Grid"
+            {
+                token outputs:mdl:displacement.connect = </World/Environment/Looks/Grid/Shader.outputs:out>
+                token outputs:mdl:surface.connect = </World/Environment/Looks/Grid/Shader.outputs:out>
+                token outputs:mdl:volume.connect = </World/Environment/Looks/Grid/Shader.outputs:out>
+
+                def Shader "Shader"
+                {
+                    uniform token info:implementationSource = "sourceAsset"
+                    uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                    uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                    float inputs:albedo_add = 0 (
+                        customData = {
+                            float default = 0
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = -1
+                            }
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Add"
+                        doc = """Adds a constant value to the diffuse color 
+
+"""
+                        hidden = false
+                    )
+                    float inputs:albedo_brightness = 0.52 (
+                        customData = {
+                            float default = 1
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Brightness"
+                        doc = """Multiplier for the diffuse color 
+
+"""
+                        hidden = false
+                    )
+                    float inputs:albedo_desaturation = 1 (
+                        customData = {
+                            float default = 0
+                            dictionary soft_range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Desaturation"
+                        doc = """Desaturates the diffuse color
+
+"""
+                        hidden = false
+                    )
+                    asset inputs:diffuse_texture = @https://omniverse-content-production.s3.us-west-2.amazonaws.com/Assets/Scenes/Templates/Default/SubUSDs/textures/ov_uv_grids_basecolor_1024.png@ (
+                        colorSpace = "sRGB"
+                        customData = {
+                            asset default = @@
+                        }
+                        displayGroup = "Albedo"
+                        displayName = "Albedo Map"
+                        hidden = false
+                        renderType = "texture_2d"
+                    )
+                    bool inputs:project_uvw = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable Project UVW Coordinates"
+                        doc = """When enabled, UV coordinates will be generated by projecting them from a coordinate system
+
+"""
+                        hidden = false
+                    )
+                    float inputs:reflection_roughness_constant = 0.333 (
+                        customData = {
+                            float default = 0.5
+                            dictionary range = {
+                                float max = 1
+                                float min = 0
+                            }
+                        }
+                        displayGroup = "Reflectivity"
+                        displayName = "Roughness Amount"
+                        doc = """Higher roughness values lead to more blurry reflections
+
+"""
+                        hidden = false
+                    )
+                    float inputs:texture_rotate = 0 (
+                        customData = {
+                            float default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Rotate"
+                        doc = """Rotates angle of texture in degrees.
+
+"""
+                        hidden = false
+                    )
+                    float2 inputs:texture_scale = (0.5, 0.5) (
+                        customData = {
+                            float2 default = (1, 1)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Tiling"
+                        doc = """Controls the repetition of the texture.
+
+"""
+                        hidden = false
+                    )
+                    float2 inputs:texture_translate = (0, 0) (
+                        customData = {
+                            float2 default = (0, 0)
+                        }
+                        displayGroup = "UV"
+                        displayName = "Texture Translate"
+                        doc = """Controls position of texture.
+
+"""
+                        hidden = false
+                    )
+                    bool inputs:world_or_object = 0 (
+                        customData = {
+                            bool default = 0
+                        }
+                        displayGroup = "UV"
+                        displayName = "Enable World Space"
+                        doc = """When enabled, uses world space for projection, otherwise object space is used
+
+"""
+                        hidden = false
+                    )
+                    token outputs:out (
+                        renderType = "material"
+                    )
+                }
+            }
+        }
+
+        def Mesh "ground" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-1400, -1400, 0), (1400, 1400, 0)]
+            int[] faceVertexCounts = [4]
+            int[] faceVertexIndices = [0, 1, 3, 2]
+            rel material:binding = </World/Environment/Looks/Grid> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-700, -700, 0), (700, -700, 0), (-700, 700, 0), (700, 700, 0)]
+            bool primvars:isMatteObject = 0
+            texCoord2f[] primvars:st = [(0, 0), (14, 0), (14, 14), (0, 14)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            token visibility = "inherited"
+            double3 xformOp:rotateXYZ = (0, -90, -90)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Plane "groundCollider" (
+            prepend apiSchemas = ["PhysicsCollisionAPI"]
+        )
+        {
+            uniform token axis = "Y"
+            uniform token purpose = "guide"
+        }
+    }
+
+    def PhysicsScene "PhysicsScene"
+    {
+        vector3f physics:gravityDirection = (0, -1, 0)
+        float physics:gravityMagnitude = 100
+    }
+
+    def Material "PhysicsMaterial" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:dynamicFriction = 0.7
+        float physics:restitution = 0.90000004
+        float physics:staticFriction = 1
+    }
+}
+

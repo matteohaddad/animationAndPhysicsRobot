@@ -1,0 +1,41 @@
+#usda 1.0
+(
+    defaultPrim = "Robot"
+    endTimeCode = 192
+    startTimeCode = 1
+    upAxis = "Y"
+    # Full robot animation with preserved manual transforms
+)
+
+def Xform "Robot" (
+    prepend references = @./Robot.usda@
+)
+{
+    over "Base"
+    {
+        float xformOp:rotateY:spin.timeSamples = {
+            1: 0,
+            192: 360,
+        }
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateY:spin"]
+    }
+
+    over "UpperArm"
+    {
+        float xformOp:rotateZ:twist.timeSamples = {
+            1: 0,
+            96: 30,
+        }
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZ:twist"]
+    }
+
+    over "Gripper"
+    {
+        float3 xformOp:scale:openClose.timeSamples = {
+            1: (1, 1, 1),
+            96: (2, 2, 2),
+            192: (1, 1, 1),
+        }
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale:openClose"]
+    }
+}
